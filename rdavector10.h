@@ -4,13 +4,14 @@
 #include <QString>
 #include <QByteArray>
 #include <QVector>
-
+#include <QDateTime>
 
 
 class RdaVector10
 {
 private:
     int m_vectorNumber;
+    QDateTime m_TimeOfThisVector; // date time format dd:hh:mm:ss:MMMM
     QByteArray m_ourVector;
     int m_adcPressureData;
     int m_adc_TP;
@@ -38,6 +39,8 @@ public:
     int getCurrentVoltage();
 
     int getPressure();
+
+    QByteArray getBytes();
 
     bool getValidness();
 
