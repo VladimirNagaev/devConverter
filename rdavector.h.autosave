@@ -1,0 +1,16 @@
+#ifndef RDAVECTOR_H
+#define RDAVECTOR_H
+
+
+class RdaVector
+{
+private:
+    int m_vectorNumber;
+        
+    
+public:
+    static 
+    RdaVector();
+};
+
+#endif // RDAVECTOR_H
