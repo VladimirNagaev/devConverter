@@ -8,16 +8,17 @@
 #include <QDataStream>
 
 
+
 class RdaVector10
 {
 private:
     int m_vectorNumber;
-    int m_isAsVector;
+    short m_isAsVector;
     QDateTime m_TimeOfThisVector; // date time format dd:hh:mm:ss:MMMM
     QByteArray m_ourVector;
     int m_adcPressureData;
-    int m_adc_TP;
-    int m_currentVoltage; // 0,1* (voltage bytes)
+    short m_adc_TP;
+    float m_currentVoltage; // 0,1* (voltage bytes)
     int m_pressure; // MPa or Atm
 
     bool m_isValid = true;
@@ -26,7 +27,11 @@ private:
 
 public:
     static RdaVector10 fromBytes(QByteArray ourVector);
+    static RdaVector10 fromBytes(QByteArray ourVector, int vectoNumber);
     static RdaVector10 deserializeVectorFromText(QString text);
+    static short bytesToInt(quint8 byte1, quint8 byte2);
+    static short bytesToInt(quint8 byte1, quint8 byte2, quint8 byte3);
+    static int bytesToInt(quint8 byte1, quint8 byte2, quint8 byte3, quint8 byte4);
     //static QString fromVector(RdaVector10);
 
     QString toJson();
@@ -38,13 +43,13 @@ public:
     int getADCPressure();
     //void setADCPressure(int newPressure);
 
-    int getADC_Tp();
+    short getADC_Tp();
 
-    int getCurrentVoltage();
+    float getCurrentVoltage();
 
     int getPressure();
 
-    int getAsAnotherVector();
+    short getAsAnotherVector();
     void setAsAnotherVector(int exVector);
 
 

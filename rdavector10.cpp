@@ -17,10 +17,10 @@ RdaVector10::RdaVector10()
         m_vectorNumber = nomber;
     }
 
-    int RdaVector10::getADC_Tp(){
+    short RdaVector10::getADC_Tp(){
         return m_adc_TP;
     }
-    int RdaVector10::getCurrentVoltage(){
+    float RdaVector10::getCurrentVoltage(){
         return m_currentVoltage;
     }
     int RdaVector10::getPressure(){
@@ -31,7 +31,7 @@ RdaVector10::RdaVector10()
         return m_isValid;
     }
 
-    int RdaVector10::getAsAnotherVector(){
+    short RdaVector10::getAsAnotherVector(){
         return m_isAsVector;
     }
     void RdaVector10::setAsAnotherVector(int exVector){
@@ -46,12 +46,36 @@ RdaVector10::RdaVector10()
         return m_isNull;
     }
     void RdaVector10::nullThisVector(bool status){
-        m_isNull = !status
+        m_isNull = !status;
     }
 
     QByteArray RdaVector10::getBytes(){
         return  m_ourVector;
     }
+
+     short RdaVector10::bytesToInt(quint8 byte1, quint8 byte2, quint8 byte3){ //byte 1  -older bute 3 is small
+
+         uint32_t pressure = (static_cast<uint32_t>(byte3) << 16) |
+                 (static_cast<uint32_t>(byte2) << 8) | byte1;
+
+         return (short)pressure;
+
+    }
+     short RdaVector10::bytesToInt(quint8 byte1, quint8 byte2){  //byte 1  -older byte2 is small
+
+         uint16_t pressure =(static_cast<uint32_t>(byte2) << 8) | byte1;
+
+         return (short)pressure;
+     }
+
+     int RdaVector10::bytesToInt(quint8 byte1, quint8 byte2, quint8 byte3, quint8 byte4){ //byte1  -older byte4 is small
+
+         uint32_t pressure = (static_cast<uint32_t>(byte4) << 24) |
+                 (static_cast<uint32_t>(byte3) << 16) |
+                 (static_cast<uint32_t>(byte2) << 8) | byte1;
+
+         return (int)pressure;
+     }
 
     QString RdaVector10::toText(){
         QString text = "";
@@ -212,25 +236,28 @@ RdaVector10::RdaVector10()
 
 
     RdaVector10 RdaVector10::fromBytes(QByteArray ourVector){
-        char *buffer;
-        int size;
         RdaVector10 rdaVector;
-        QByteArray byteArr( buffer, size);
-        QDataStream ds (&byteArr,QIODevice::ReadOnly);
-        ds.setByteOrder(QDataStream::BigEndian);
+
+        rdaVector.m_vectorNumber = 0;
 
         if (ourVector.size()!= 10){
             rdaVector.nullThisVector(true);
             return rdaVector;
         }
+        rdaVector.m_adcPressureData = bytesToInt(ourVector.at(2),ourVector.at(1), ourVector.at(0));
+        rdaVector.m_adc_TP = bytesToInt(ourVector.at(4),ourVector.at(3));
+        rdaVector.m_currentVoltage = ((float)ourVector.at(5))*0.1;
+        rdaVector.m_pressure = bytesToInt(ourVector.at(6), ourVector.at(7), ourVector.at(8), ourVector.at(9));
+        rdaVector.m_isAsVector = 0;
 
-        for (int i = 0 ; i < 10 ; i++ ) {
-            // TODO Parce this
-           qint16 tmp;
 
-
-        }
 
         return rdaVector;
     }
+
+    RdaVector10 RdaVector10::fromBytes(QByteArray ourVector, int vectoNumber){
+        RdaVector10 rdaVector = RdaVector10::fromBytes(ourVector);
+        rdaVector.setNumber(vectoNumber);
+        return rdaVector;
+            }
 
