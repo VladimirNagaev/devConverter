@@ -17,13 +17,13 @@ RdaVector10::RdaVector10()
         m_vectorNumber = nomber;
     }
 
-    short RdaVector10::getADC_Tp(){
+    quint16 RdaVector10::getADC_Tp(){
         return m_adc_TP;
     }
     float RdaVector10::getCurrentVoltage(){
         return m_currentVoltage;
     }
-    int RdaVector10::getPressure(){
+    quint32 RdaVector10::getPressure(){
         return m_pressure;
     }
 
@@ -46,7 +46,7 @@ RdaVector10::RdaVector10()
         return m_isNull;
     }
     void RdaVector10::nullThisVector(bool status){
-        m_isNull = !status;
+        m_isNull = status;
     }
 
     QByteArray RdaVector10::getBytes(){
@@ -142,10 +142,10 @@ RdaVector10::RdaVector10()
                m_vectorNumber = stringlist.at(i+1).toInt();
            }
            if (stringlist.at(i) == "P(MPa)" && i< stringlist.size()-1){
-               m_pressure = stringlist.at(i+1).toInt();
+               m_pressure = (quint32)stringlist.at(i+1).toInt();
            }
            if (stringlist.at(i) == "Tp" && i< stringlist.size()-1){
-               m_adc_TP = stringlist.at(i+1).toInt();
+               m_adc_TP = (quint16)stringlist.at(i+1).toShort();
            }
            if (stringlist.at(i) == "ADC_P" && i< stringlist.size()-1){
                m_adcPressureData = stringlist.at(i+1).toInt();
@@ -175,10 +175,10 @@ RdaVector10::RdaVector10()
                 rdaVector.m_vectorNumber = stringlist.at(i+1).toInt();
             }
             if (stringlist.at(i) == "P(MPa)" && i< stringlist.size()-1){
-                rdaVector.m_pressure = stringlist.at(i+1).toInt();
+                rdaVector.m_pressure = (quint32)stringlist.at(i+1).toInt();
             }
             if (stringlist.at(i) == "Tp" && i< stringlist.size()-1){
-                rdaVector.m_adc_TP = stringlist.at(i+1).toInt();
+                rdaVector.m_adc_TP = (quint16)stringlist.at(i+1).toShort();
             }
             if (stringlist.at(i) == "ADC_P" && i< stringlist.size()-1){
                 rdaVector.m_adcPressureData = stringlist.at(i+1).toInt();

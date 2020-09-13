@@ -17,9 +17,9 @@ private:
     QDateTime m_TimeOfThisVector; // date time format dd:hh:mm:ss:MMMM
     QByteArray m_ourVector;
     int m_adcPressureData;
-    short m_adc_TP;
+    quint16 m_adc_TP;
     float m_currentVoltage; // 0,1* (voltage bytes)
-    int m_pressure; // MPa or Atm
+    quint32 m_pressure; // MPa or Atm
 
     bool m_isValid = true;
     bool m_isNull = false;
@@ -43,11 +43,11 @@ public:
     int getADCPressure();
     //void setADCPressure(int newPressure);
 
-    short getADC_Tp();
+    quint16 getADC_Tp();
 
     float getCurrentVoltage();
 
-    int getPressure();
+    quint32 getPressure();
 
     short getAsAnotherVector();
     void setAsAnotherVector(int exVector);
