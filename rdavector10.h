@@ -16,7 +16,7 @@ private:
     short m_isAsVector;
     QDateTime m_TimeOfThisVector; // date time format dd:hh:mm:ss:MMMM
     QByteArray m_ourVector;
-    int m_adcPressureData;
+    quint32 m_adcPressureData;
     quint16 m_adc_TP;
     float m_currentVoltage; // 0,1* (voltage bytes)
     quint32 m_pressure; // MPa or Atm
@@ -30,8 +30,10 @@ public:
     static RdaVector10 fromBytes(QByteArray ourVector, int vectoNumber);
     static RdaVector10 deserializeVectorFromText(QString text);
     static short bytesToInt(quint8 byte1, quint8 byte2);
-    static short bytesToInt(quint8 byte1, quint8 byte2, quint8 byte3);
+    static quint32 bytesToInt(quint8 byte1, quint8 byte2, quint8 byte3);
     static int bytesToInt(quint8 byte1, quint8 byte2, quint8 byte3, quint8 byte4);
+    static float fromBytesToFloat(quint8 byte4, quint8 byte3, quint8 byte2, quint8 byte1); // 7-first
+    static QByteArray fromFloatToBytes(float i);
     //static QString fromVector(RdaVector10);
 
     QString toJson();
