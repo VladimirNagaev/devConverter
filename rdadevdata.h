@@ -1,12 +1,12 @@
 #ifndef RDADEVDATA_H
 #define RDADEVDATA_H
 
+#include <QDateTime>
+#include <QFile>
 #include <QString>
 #include <QVector>
-#include <QFile>
-#include<rdavector10.h>
-#include <QDateTime>
 
+#include <rdavector10.h>
 
 class RdaDevData
 {
@@ -14,10 +14,9 @@ private:
     int m_deviceNumber;
     int m_numberOfVectors;
 
-
-
     QVector<RdaVector10> m_dataVectors;
     QByteArray m_headerVector;
+    QByteArray inputedFile;
 
     int m_interval_1_regTime;
     int m_interval_2_regTime;
@@ -40,13 +39,11 @@ private:
     int m_dateAndTimeOfBegin;
     QDateTime m_startOfTheRecord;
 
-
-
-
-
 public:
     static RdaDevData fromFile(QString addresOfInFile);
     static RdaDevData fromData(QString text);
+
+    void fromBytes(QByteArray inputBin);
 
     QString getJsonHeader();
     QString getTextHeader();
@@ -74,16 +71,14 @@ public:
     int getInterval_7_regPeriod();
     int getInterval_8_regPeriod();
 
+    RdaVector10 at(int number);
+
     void addVector(RdaVector10 newVector);
     void recalculate();
 
-
 protected:
-
     RdaDevData();
-    RdaDevData(QByteArray inputFile);
-
-
+    RdaDevData(QByteArray inputBinArray);
 };
 
 #endif // RDADEVDATA_H

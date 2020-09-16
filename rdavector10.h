@@ -1,13 +1,11 @@
 #ifndef RDAVECTOR_H
 #define RDAVECTOR_H
 
-#include <QString>
 #include <QByteArray>
-#include <QVector>
-#include <QDateTime>
 #include <QDataStream>
-
-
+#include <QDateTime>
+#include <QString>
+#include <QVector>
 
 class RdaVector10
 {
@@ -24,12 +22,11 @@ private:
     bool m_isValid = true;
     bool m_isNull = false;
 
-
 public:
     static RdaVector10 fromBytes(QByteArray ourVector);
     static RdaVector10 fromBytes(QByteArray ourVector, int vectoNumber);
     static RdaVector10 deserializeVectorFromText(QString text);
-    static short bytesToInt(quint8 byte1, quint8 byte2);
+    static quint16 bytesToInt(quint8 byte1, quint8 byte2);
     static quint32 bytesToInt(quint8 byte1, quint8 byte2, quint8 byte3);
     static int bytesToInt(quint8 byte1, quint8 byte2, quint8 byte3, quint8 byte4);
     static float fromBytesToFloat(quint8 byte4, quint8 byte3, quint8 byte2, quint8 byte1); // 7-first
@@ -54,8 +51,6 @@ public:
     short getAsAnotherVector();
     void setAsAnotherVector(int exVector);
 
-
-
     QByteArray getBytes();
 
     bool isNull();
@@ -68,8 +63,6 @@ public:
     //void deserializeFromJson(QString json);
 
 protected:
-
-
     RdaVector10();
     RdaVector10(QByteArray ourVector);
 };
